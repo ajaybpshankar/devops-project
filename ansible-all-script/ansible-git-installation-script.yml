@@ -1,0 +1,30 @@
+---
+- name: git installation
+  hosts: server1
+  become: true
+  tasks: 
+    - name: sudo update
+      apt:
+       update_cache: yes
+    
+    - name: git installation
+      apt:
+        name: git
+        state: present
+    
+    - name: git initialize
+      command: git init
+      args: 
+        chdir: /root
+
+    - name: Configure Git user name
+      command: git config --global user.name "ajay"
+
+    - name: Configure Git user email
+      command: git config --global user.email "ajay@gmail.com"
+    
+    - name: Add remote origin
+      command: git remote add origin https://github.com/ajaybpshankar/testfile.git
+      args:
+        chdir: /root
+        creates: /root /.git/config
