@@ -1,0 +1,10 @@
+---
+- name: playbook
+  hosts: server1
+  become: true
+  tasks:
+     - name: creating directory
+       file:
+         name: dummy
+         path: /root
+         state: directory
