@@ -1,0 +1,32 @@
+---
+- name: jenkin installation
+  hosts: server1
+  become: true
+  tasks:
+   - name: updating the sudo
+     apt: 
+      update_cache: yes
+
+   - name: linking repository
+     become: true
+     shell: |
+      sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+      echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/nul
+   - name: updating the sudo
+     apt: 
+      update_cache: yes
+
+   - name: java installation
+     apt:
+      name: openjdk-21-jre
+      state: present
+   
+   - name: installing jenkins
+     apt: 
+      name: jenkins
+      state: present
+   
+   - name: enabling permission
+     service:
+       name: jenkins
+       state: started
