@@ -1,6 +1,6 @@
 ---
 - name: playbook
-  hosts: server1
+  hosts: all
   become: true
   tasks:
      - name: creating directory
